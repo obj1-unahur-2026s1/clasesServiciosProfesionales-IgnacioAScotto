@@ -1,9 +1,45 @@
-import example.pepita
+import empresas.*
+import universidades.*
+import profesionales.*
 
-describe "group of tests for pepita" {
+describe "Tests de la Etapa 1" {
+  //Universidades:
+  const uSanMartin = new Universidad(provincia=buenosAires, honorariosRecomendado=3500)
+  const uRosario = new Universidad(provincia=santaFe, honorariosRecomendado=2800)
+  const uCorrientes = new Universidad(provincia=corrientes, honorariosRecomendado=4200)
+  const uHurlingham = new Universidad(provincia=buenosAires, honorariosRecomendado=8800)
+  
+  //Profesionales:
+  const juana = new ProfesionalVinculado(universidad=uRosario)
+  const melina = new ProfesionalAsociado(universidad=uCorrientes)
+  const rocio = new ProfesionalLibre(universidad=uHurlingham,trabajaEn=[santaFe,cordoba,buenosAires],honorariosPorHora=5000)
+  const luciana = new ProfesionalLibre(universidad=uRosario,trabajaEn=[santaFe,entreRios],honorariosPorHora=3200)
 
-  test "pepita has initial energy" {
-    assert.equals(100, pepita.energy())
+  //Empresa:
+  const empresa1 = new Empresa(honorarioReferencia=3500)
+
+  method initialize() {
+    empresa1.contratarProfesionales([juana,melina,rocio,luciana])
+  }
+  test "Dos de sus profesionales estudiaron en rosario" {
+    assert.equals(2, empresa1.cuantosEstudiaronEn(uRosario))
+  }
+  test "Uno de sus pofesionales estudio en Hurlingham" {
+    assert.equals(1, empresa1.cuantosEstudiaronEn(uHurlingham))
+  }
+  test "Ningun profesional estudio en San Martin" {
+    assert.equals(0, empresa1.cuantosEstudiaronEn(uSanMartin))
   }
 
+  test "Solo Rocio es un profesional caro" {
+    assert.equals([rocio], empresa1.profesionalesCaros())
+  }
+
+  test "Las Universidades formadoras son: Rosario, Corrientes y Hurlingham" {
+    assert.equals(#{uRosario, uCorrientes, uHurlingham}, empresa1.universidadesFormadoras())
+  }
+
+  test "El profesional barato es: Juana" {
+    assert.equals(juana, empresa1.profesionalMasBarato())
+  }
 }

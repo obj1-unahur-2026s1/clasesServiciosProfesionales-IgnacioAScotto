@@ -19,6 +19,6 @@ class Empresa {
 
   method profesionalMasBarato() = profesionalesContratados.min({p=>p.honorariosPorHora()})
 
-  method esDeGenteAcotada() = profesionalesContratados.all({p=>p.trabajaEn().size() > 3})
+  method esDeGenteAcotada() = profesionalesContratados.all({p=>p.trabajaEn().size() <= 3})
   
 }
