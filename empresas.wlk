@@ -21,4 +21,7 @@ class Empresa {
 
   method esDeGenteAcotada() = profesionalesContratados.all({p=>p.trabajaEn().size() <= 3})
   
+
+  //Etapa 2
+  method puedeSatisfacerA(unSolicitante) = profesionalesContratados.any({p=>unSolicitante.puedeSerAtendidoPor(p)})
 }
